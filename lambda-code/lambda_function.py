@@ -49,6 +49,7 @@ def lambda_handler(event, context):
     for result in results:
         # Write result to DynamoDB
         item = {
+            "id": str(uuid.uuid4()),
             "url": result["url"],
             "timestamp": result["timestamp"],
             "status": result["status"],

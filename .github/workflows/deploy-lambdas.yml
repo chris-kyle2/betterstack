@@ -1,0 +1,52 @@
+name: Deploy Monitoring Lambda to All Regions
+
+on:
+  push:
+    paths:
+      - lambda-code/main.py
+      - lambda-code/requirements.txt
+      - .github/workflows/deploy-lambdas.yml
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to all Lambda regions
+    runs-on: ubuntu-latest
+
+    env:
+      FUNCTION_ENV: dev
+      REGIONS: us-east-1 eu-west-1 ap-south-1 us-west-2 ap-northeast-1
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -t package
+
+      - name: Zip Lambda package
+        run: |
+          cp main.py package/
+          cd package
+          zip -r ../lambda.zip .
+
+      - name: Deploy Lambda to all regions
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          for region in $REGIONS; do
+            function_name="${FUNCTION_ENV}-${region}-lambda-function"
+            echo "Deploying to $function_name in $region..."
+            aws lambda update-function-code \
+              --function-name "$function_name" \
+              --zip-file fileb://lambda.zip \
+              --region "$region"
+          done

@@ -33,7 +33,7 @@ jobs:
 
       - name: Zip Lambda package
         run: |
-          cp main.py package/
+          cp lambda-code/main.py package/
           cd package
           zip -r ../lambda.zip .
 

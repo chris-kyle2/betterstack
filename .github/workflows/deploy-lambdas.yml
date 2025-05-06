@@ -31,7 +31,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r lambda-code/requirements.txt -t package
 
-      - name: Zip Lambda package
+      - name: Zip Lambda package for deploying to lambda
         run: |
           cp lambda-code/lambda_function.py package/
           cd package

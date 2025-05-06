@@ -15,7 +15,7 @@ jobs:
 
     env:
       FUNCTION_ENV: dev
-      REGIONS: us-east-1 eu-west-1 ap-south-1 us-west-2 ap-southeast-1
+      REGIONS: ap-south-1
 
     steps:
       - name: Checkout code

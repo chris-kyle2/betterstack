@@ -3,7 +3,7 @@ name: Deploy Monitoring Lambda to All Regions
 on:
   push:
     paths:
-      - lambda-code/main.py
+      - lambda-code/lambda_function.py
       - lambda-code/requirements.txt
       - .github/workflows/deploy-lambdas.yml
   workflow_dispatch:
@@ -33,7 +33,7 @@ jobs:
 
       - name: Zip Lambda package
         run: |
-          cp lambda-code/main.py package/
+          cp lambda-code/lambda_function.py package/
           cd package
           zip -r ../lambda.zip .
 

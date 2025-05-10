@@ -27,7 +27,7 @@ jobs:
       - name: Create deployment package
         run: |
            mkdir -p deployment
-           ls -la
+           ls -la api-backend/
            pip install -r api-backend/requirements.txt -t deployment
            cp -r api-backend/app deployment/
            cp api-backend/lambda_handler.py deployment/

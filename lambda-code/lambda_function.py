@@ -50,12 +50,12 @@ def lambda_handler(event, context):
     results = asyncio.run(monitor_websites())
 
     for result in results:
-        # Validate required fields
+        
         if "url" not in result or "timestamp" not in result or "status" not in result:
             print(f"Invalid result skipped: {result}")
             continue
 
-        # Write result to DynamoDB
+        
         item = {
             "id": str(uuid.uuid4()),
             "url": result["url"],

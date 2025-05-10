@@ -1,0 +1,49 @@
+name: Deploy Central API
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - api-backend/**
+    
+
+jobs:
+  deploy:
+    name: Deploy to fastapi lambda
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+            path: api-backend
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Create deployment package
+        run: |
+           mkdir -p deployment
+           pip install -r requirements.txt -t deployment
+           cp -r app deployment/
+           cp lambda_handler.py deployment/
+           cd deployment
+           zip -r ../deployment.zip .
+
+
+      - name: Login to AWS
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+          
+      - name: Deploy to fastapi lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
+            --zip-file fileb://deployment.zip
+

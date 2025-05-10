@@ -31,13 +31,14 @@ jobs:
         run: |
           echo "Working directory: $(pwd)"
           ls -la
-           mkdir -p ../deployment
-           ls -la api-backend/
-           pip install -r requirements.txt -t ../deployment
-           cp -r app ../deployment/
-           cp lambda_handler.py ../deployment/
-           cd ../deployment
-           zip -r ../deployment.zip .
+          WORKSPACE_DIR="$GITHUB_WORKSPACE"
+          echo "Workspace directory: $WORKSPACE_DIR"
+          ls -la $WORKSPACE_DIR
+          pip install -r requirements.txt -t $WORKSPACE_DIR/deployment
+          cp -r app $WORKSPACE_DIR/deployment/
+          cp lambda_handler.py $WORKSPACE_DIR/deployment/
+          cd $WORKSPACE_DIR/deployment
+          zip -r $WORKSPACE_DIR/deployment.zip .
 
 
       - name: Login to AWS

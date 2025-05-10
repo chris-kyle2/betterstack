@@ -10,3 +10,15 @@ module "dynamodb"{
     
 }
 
+module "fastapi_lambda" {
+    source = "../../../modules/fastapi_lambda"
+    environment = var.environment
+    region = var.region
+    function_name_prefix = var.function_name_prefix
+    lambda_handler = var.lambda_handler
+    lambda_runtime = var.lambda_runtime
+    table_name = module.dynamodb.table_name
+    depends_on = [
+        module.dynamodb
+    ]
+}

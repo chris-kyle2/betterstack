@@ -1,0 +1,41 @@
+
+variable "environment" {
+  description = "The environment for the Lambda function."
+  type        = string
+  default     = "dev"
+}
+
+variable "region" {
+  description = "The region for the Lambda function."
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "function_name_prefix" {
+  description = "The prefix for the Lambda function name."
+  type        = string
+  default     = "central-api"
+}
+
+variable "lambda_handler" {
+  description = "The handler for the Lambda function."
+  type        = string
+  default     = "lambda_handler.handler"
+}
+
+variable "lambda_runtime" {
+  description = "The runtime for the Lambda function."
+  type        = string
+  default     = "python3.12"
+}
+
+variable "table_name" {
+  description = "The name of the DynamoDB table."
+  type        = string
+}
+
+
+
+
+
+

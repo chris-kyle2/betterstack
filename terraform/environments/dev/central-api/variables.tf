@@ -84,3 +84,13 @@ variable "lambda_function_tags" {
     description = "Resource tags"
     type        = map(string)
 }
+variable "function_name_prefix" {
+  description = "The prefix for the Lambda function name."
+  type        = string
+  default     = "central-api"
+}
+
+
+
+
+

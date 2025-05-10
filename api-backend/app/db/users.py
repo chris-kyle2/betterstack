@@ -56,6 +56,10 @@ def delete_user(user_id: int) -> None:
         return {"message": f"User with id: {user_id} deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+
+
+    
 
 
 

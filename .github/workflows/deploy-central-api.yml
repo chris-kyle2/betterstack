@@ -29,6 +29,8 @@ jobs:
       - name: Create deployment package
         working-directory: api-backend
         run: |
+          echo "Working directory: $(pwd)"
+          ls -la
            mkdir -p ../deployment
            ls -la api-backend/
            pip install -r requirements.txt -t ../deployment

@@ -29,8 +29,15 @@ jobs:
         run: |
           echo "Working directory: $(pwd)"
           ls -la
+          WORKSPACE_DIR="$GITHUB_WORKSPACE"
+          echo "Workspace directory: $WORKSPACE_DIR"
+          ls -la $WORKSPACE_DIR/api-backend/
+          pip install -r $WORKSPACE_DIR/api-backend/requirements.txt -t $WORKSPACE_DIR/deployment
+          cp -r $WORKSPACE_DIR/api-backend/app $WORKSPACE_DIR/deployment/
+          cp $WORKSPACE_DIR/api-backend/lambda_handler.py $WORKSPACE_DIR/deployment/
+          cd $WORKSPACE_DIR/deployment
+          zip -r $WORKSPACE_DIR/deployment.zip .
         
-
 
       # - name: Login to AWS
       #   uses: aws-actions/configure-aws-credentials@v2

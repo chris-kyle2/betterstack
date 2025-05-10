@@ -17,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-            path: api-backend
+            path: api-backend/
 
       - name: Setup python
         uses: actions/setup-python@v5
@@ -27,6 +27,7 @@ jobs:
       - name: Create deployment package
         run: |
            mkdir -p deployment
+           ls -la
            pip install -r api-backend/requirements.txt -t deployment
            cp -r api-backend/app deployment/
            cp api-backend/lambda_handler.py deployment/

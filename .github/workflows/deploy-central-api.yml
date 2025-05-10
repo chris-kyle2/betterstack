@@ -27,13 +27,14 @@ jobs:
           python-version: '3.12'
 
       - name: Create deployment package
+        working-directory: api-backend
         run: |
-           mkdir -p deployment
+           mkdir -p ../deployment
            ls -la api-backend/
-           pip install -r api-backend/requirements.txt -t deployment
-           cp -r api-backend/app deployment/
-           cp api-backend/lambda_handler.py deployment/
-           cd deployment
+           pip install -r requirements.txt -t ../deployment
+           cp -r app ../deployment/
+           cp lambda_handler.py ../deployment/
+           cd ../deployment
            zip -r ../deployment.zip .
 
 

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import users
+from app.routers import users,endpoints
 
 app = FastAPI()
 
@@ -8,4 +8,5 @@ def read_root():
     return {"message": "Hello, World!"}
 
 
-app.include_router(users.router, prefix="/users", tags=["users"])
+app.include_router(users.router)
+app.include_router(endpoints.router)

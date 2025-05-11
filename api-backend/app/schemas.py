@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr , HttpUrl
 from typing import Optional
 from datetime import datetime
 
@@ -13,3 +13,17 @@ class UserOut(UserCreate):
 
     class Config:
         orm_mode = True
+
+
+class EndPointIn(BaseModel):
+    url: HttpUrl
+    is_active: bool = True
+
+class EndPointOut(EndPointIn):
+    id: str
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+

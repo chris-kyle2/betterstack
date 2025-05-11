@@ -38,7 +38,9 @@ resource "aws_lambda_function" "fastapi_lambda" {
 
   environment {
     variables = {
-      TABLE_NAME = var.table_name
+      USER_TABLE_NAME = var.user_table_name
+      ENDPOINT_TABLE_NAME = var.endpoint_table_name
+
     }
   }
 

@@ -29,7 +29,12 @@ variable "lambda_runtime" {
   default     = "python3.12"
 }
 
-variable "table_name" {
+variable "user_table_name" {
+  description = "The name of the DynamoDB table."
+  type        = string
+}
+
+variable "endpoint_table_name" {
   description = "The name of the DynamoDB table."
   type        = string
 }

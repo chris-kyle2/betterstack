@@ -5,7 +5,12 @@ from app.db.users import get_users as get_users_db , get_user_by_id as get_user_
 from app.db.users import create_user as create_user_db
 from app.db.users import delete_user as delete_user_db
 from app.auth.cognito import get_current_user
-router = APIRouter()
+
+
+router = APIRouter(
+    prefix='/users',
+    tags=['users']
+)
 
 
 @router.get("/me",response_model=UserOut,status_code=status.HTTP_200_OK)

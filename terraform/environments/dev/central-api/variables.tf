@@ -2,11 +2,6 @@ variable "region" {
   type = string
   default = "us-east-1"
 }
-
-variable "table_name" {
-  description = "The name of the DynamoDB table"
-  type        = string
-}
 variable "environment" {
   description = "The environment for the DynamoDB table"
   type        = string
@@ -16,6 +11,20 @@ variable "billing_mode" {
   type        = string
   default     = "PAY_PER_REQUEST"
 }
+
+
+
+
+
+
+
+
+variable "user_table_name" {
+  description = "The name of the DynamoDB table"
+  type        = string
+}
+
+
 variable "dynamodb_tags" {
   description = "Resource tags"
   type        = map(string)
@@ -47,11 +56,7 @@ variable "lambda_runtime" {
   type        = string
   default     = "python3.8"
 }
-variable "schedule_expression" {
-  description = "The schedule expression for the Lambda function"
-  type        = string
-  default     = "rate(5 minutes)"
-}
+
 variable "lambda_role_name" {
   description = "The name of the IAM role for the Lambda function"
   type        = string
@@ -88,6 +93,13 @@ variable "function_name_prefix" {
   description = "The prefix for the Lambda function name."
   type        = string
   default     = "central-api"
+}
+
+
+variable "range_key" {
+  description = "The range key for the DynamoDB table."
+  type        = string
+  default     = "endpoint_id"
 }
 
 

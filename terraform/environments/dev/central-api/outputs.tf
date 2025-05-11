@@ -16,3 +16,10 @@ output "lambda_function_arn" {
   description ="ARN of the lambda function"
   value = module.fastapi_lambda.lambda_function_arn
 }
+
+output "endpoints_dynamodb_name" {
+  description = "The name of the endpoints DynamoDB table"
+  value = module.endpoints_dynamodb.table_name
+}
+
+

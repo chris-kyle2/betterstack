@@ -24,6 +24,6 @@ jobs:
 
       - name: Package lambda code for deployment
         run: |
-           echo "Print current directory"
+           echo "Print current directory: $(pwd)"
            ls -la
-           
+

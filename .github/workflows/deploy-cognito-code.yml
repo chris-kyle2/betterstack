@@ -29,9 +29,20 @@ jobs:
            WORKSPACE_DIR="$GITHUB_WORKSPACE"
            echo "Workspace directory: $WORKSPACE_DIR"
            ls -la $WORKSPACE_DIR/lambda-code/cognito-code/
-           pip install -r $WORKSPACE_DIR/lambda-code/cognito-code/requirements.txt -t $WORKSPACE_DIR/lambda-code/deployment
-           cp $WORKSPACE_DIR/lambda-code/cognito-code/lambda_function.py $WORKSPACE_DIR/lambda-code/deployment/
-           cd $WORKSPACE_DIR/lambda-code/deployment/
-           zip -r $WORKSPACE_DIR/lambda-code/cognito-code.zip .
+           pip install -r $WORKSPACE_DIR/lambda-code/cognito-code/requirements.txt -t $WORKSPACE_DIR/deployment
+           cp $WORKSPACE_DIR/lambda-code/cognito-code/lambda_function.py $WORKSPACE_DIR/deployment/
+           cd $WORKSPACE_DIR/deployment/
+           zip -r $WORKSPACE_DIR/deployment.zip .
+        
+      - name: Login to AWS
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Deploy lambda function
+        run: |
+          echo "Deploying lambda function"
+          aws lambda update-function-code --function-name ${{ secrets.COGNITO_LAMBDA_FUNCTION_NAME }} --zip-file fileb://$WORKSPACE_DIR/deployment.zip
 
      

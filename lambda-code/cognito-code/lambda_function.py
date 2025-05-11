@@ -22,15 +22,12 @@ def handler(event, context):
         }
 
         user_table.put_item(Item=user_item)
-        
-
-        return {
-            'statusCode': 200,
-            'body': json.dumps('User attributes processed successfully')
-        }
+        print(f"User item: {user_item} inserted into table {os.environ['TABLE_NAME']}")
+  
     except Exception as e:
         print(f"Error processing user attributes: {e}")
-        return {
-            'statusCode': 500,
-            'body': json.dumps(f'Error: {e}')
-        }
+    
+    return event
+        
+
+        

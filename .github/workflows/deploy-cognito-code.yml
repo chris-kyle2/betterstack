@@ -26,4 +26,12 @@ jobs:
         run: |
            echo "Print current directory: $(pwd)"
            ls -la
+           WORKSPACE_DIR="$GITHUB_WORKSPACE"
+           echo "Workspace directory: $WORKSPACE_DIR"
+           ls -la $WORKSPACE_DIR/lambda-code/cognito-code/
+           pip install -r $WORKSPACE_DIR/lambda-code/cognito-code/requirements.txt -t $WORKSPACE_DIR/lambda-code/deployment
+           cp $WORKSPACE_DIR/lambda-code/cognito-code/lambda_function.py $WORKSPACE_DIR/lambda-code/deployment/
+           cd $WORKSPACE_DIR/lambda-code/deployment/
+           zip -r $WORKSPACE_DIR/lambda-code/cognito-code.zip .
 
+     

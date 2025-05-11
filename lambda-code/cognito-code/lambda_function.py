@@ -15,9 +15,9 @@ def handler(event, context):
         user_item = {
             'user_id': user_attributes['sub'],
             'email': user_attributes['email'],
+            'name': user_attributes['name'],
             'created_at': datetime.now().isoformat(),
             'is_active': True,
-            'user_name': user_attributes['username'],
             'updated_at': datetime.now().isoformat()
         }
 

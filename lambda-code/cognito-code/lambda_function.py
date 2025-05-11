@@ -7,7 +7,7 @@ from datetime import datetime
 dynamodb = boto3.resource('dynamodb')
 user_table = dynamodb.Table(os.environ['TABLE_NAME'])
 
-def lambda_handler(event, context):
+def handler(event, context):
     try:
         user_attributes = event['request']['userAttributes']
         print(f"User attributes: {user_attributes}")

@@ -10,6 +10,7 @@ user_table = dynamodb.Table(os.environ['TABLE_NAME'])
 def handler(event, context):
     try:
         user_attributes = event['request']['userAttributes']
+        print(event)
         print(f"User attributes: {user_attributes}")
 
         user_item = {

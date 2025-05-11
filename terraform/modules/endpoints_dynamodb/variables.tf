@@ -1,47 +1,55 @@
+# variables.tf
+
+# Environment name (e.g., dev, prod, etc.)
 variable "environment" {
-  type = string
-  description = "The environment to deploy the table to"
+  description = "The environment name (e.g., dev, prod)"
+  type        = string
 }
 
+# AWS region (e.g., us-east-1, eu-west-1, etc.)
 variable "region" {
-  type = string
-  description = "The region to deploy the table to"
+  description = "AWS region where the table will be created"
+  type        = string
 }
 
+# Prefix for table name (e.g., 'api', 'service', etc.)
 variable "table_name_prefix" {
-  type = string
-  description = "The prefix for the table name"
+  description = "Prefix for the DynamoDB table name"
+  type        = string
 }
 
+# Billing mode for DynamoDB table (PROVISIONED or PAY_PER_REQUEST)
 variable "billing_mode" {
-  type = string
-  description = "The billing mode for the table"
+  description = "Billing mode for the DynamoDB table"
+  type        = string
+  default     = "PAY_PER_REQUEST"
 }
 
+# Hash key attribute (Primary key)
 variable "hash_key" {
-  type = string
-  description = "The hash key for the table"
+  description = "The attribute name for the partition key (hash key)"
+  type        = string
+  default     = "endpoint_id"
 }
 
-variable "range_key" {
-  type = string
-  description = "The range key for the table"
+# GSI hash key (secondary index)
+variable "gsi_hash_key" {
+  description = "The attribute name for the GSI hash key"
+  type        = string
+  default     = "user_id"
 }
 
+# GSI name
+variable "gsi_name" {
+  description = "The name for the GSI (Global Secondary Index)"
+  type        = string
+  default     = "user_id-index"
+}
+
+# Tags for the DynamoDB table
 variable "tags" {
-  type = map(string)
-  description = "The tags for the table"
+  description = "Tags for the DynamoDB table"
+  type        = map(string)
+  default     = {}
 }
-
-
-
-
-
-
-
-
-
-
-
-
 

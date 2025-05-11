@@ -12,6 +12,25 @@ variable "billing_mode" {
   default     = "PAY_PER_REQUEST"
 }
 
+variable "gsi_hash_key" {
+  description = "The hash key for the global secondary index"
+  type        = string
+}
+
+variable "gsi_name" {
+  description = "The name for the global secondary index"
+  type        = string
+}
+variable "tags" {
+  description = "Resource tags"
+  type        = map(string)
+}
+
+
+
+
+
+
 
 
 

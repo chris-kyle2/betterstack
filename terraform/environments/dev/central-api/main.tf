@@ -17,7 +17,8 @@ module "endpoints_dynamodb" {
     table_name_prefix = var.table_name_prefix
     billing_mode = var.billing_mode
     hash_key = var.hash_key
-    range_key = var.range_key
+    gsi_hash_key = var.gsi_hash_key
+    gsi_name = var.gsi_name
     tags = var.dynamodb_tags
 }
 

@@ -8,7 +8,7 @@ class UserCreate(BaseModel):
     plan: Optional[str] = "Free"
 
 class UserOut(UserCreate):
-    plan: str
+    plan: Optional[str] = "Free"
     created_at: datetime
 
     class Config:

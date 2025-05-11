@@ -43,6 +43,6 @@ jobs:
       - name: Deploy lambda function
         run: |
           echo "Deploying lambda function"
-          aws lambda update-function-code --function-name ${{ secrets.COGNITO_LAMBDA_FUNCTION_NAME }} --zip-file fileb://$WORKSPACE_DIR/deployment.zip
+          aws lambda update-function-code --function-name ${{ secrets.COGNITO_LAMBDA_FUNCTION_NAME }} --zip-file fileb://deployment.zip
 
      

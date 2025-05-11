@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 dynamodb = boto3.resource('dynamodb')
-user_table = dynamodb.Table(os.environ['USER_TABLE'])
+user_table = dynamodb.Table(os.environ['TABLE_NAME'])
 
 def lambda_handler(event, context):
     try:

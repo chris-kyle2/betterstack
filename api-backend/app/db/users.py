@@ -11,7 +11,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     return credentials.credentials
 
 
-TABLE_NAME = os.getenv('DYNAMODB_TABLE', 'dev-us-east-1-central-api-dynamodb-table')
+TABLE_NAME = os.getenv('DYNAMODB_TABLE', 'dev-us-east-1-cognito-users-table-dynamodb-table')
 def create_user(user: UserCreate) -> UserOut:
     try:
             
@@ -59,7 +59,7 @@ def delete_user(user_id: int) -> None:
     
 
 
-    
+
 
 
 

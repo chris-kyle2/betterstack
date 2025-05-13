@@ -47,7 +47,8 @@ resource "aws_lambda_function" "lambda_function" {
 
     environment {
         variables = {
-            TABLE_NAME = var.table_name
+            ENDPOINTS_TABLE_NAME = var.endpoints_table_name
+            LOGS_TABLE_NAME = var.logs_table_name
         }
     }
 

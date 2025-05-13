@@ -2,24 +2,20 @@ variable "region" {
   type = string
   default = "ap-south-1"
 }
-
-variable "table_name" {
-  description = "The name of the DynamoDB table"
+variable "endpoints_table_name" {
+  description = "The name of the DynamoDB table for endpoints"
   type        = string
 }
+variable "logs_table_name" {
+  description = "The name of the DynamoDB table for logs"
+  type        = string
+}
+
 variable "environment" {
   description = "The environment for the DynamoDB table"
   type        = string
 }
-variable "billing_mode" {
-  description = "The billing mode for the DynamoDB table"
-  type        = string
-  default     = "PAY_PER_REQUEST"
-}
-variable "dynamodb_tags" {
-  description = "Resource tags"
-  type        = map(string)
-}
+
 
 
 

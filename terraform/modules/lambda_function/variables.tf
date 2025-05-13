@@ -20,8 +20,12 @@ variable "schedule_expression" {
   type        = string
   default     = "rate(1 minutes)"
 }
-variable "table_name" {
-  description = "The name of the DynamoDB table."
+variable "endpoints_table_name" {
+  description = "The name of the DynamoDB table for endpoints."
+  type        = string
+}
+variable "logs_table_name" {
+  description = "The name of the DynamoDB table for logs."
   type        = string
 }
 variable "tags"{

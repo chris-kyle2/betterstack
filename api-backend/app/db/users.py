@@ -1,14 +1,10 @@
 from app.db.dynamodb import get_table
 from app.schemas import UserCreate, UserOut
 from datetime import datetime
-from fastapi import HTTPException,Depends
-from fastapi.security import HTTPBearer,HTTPAuthorizationCredentials
+from fastapi import HTTPException
 import os
 
-security = HTTPBearer()
 
-async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security))->str:
-    return credentials.credentials
 
 
 TABLE_NAME = os.getenv('DYNAMODB_TABLE', 'dev-us-east-1-cognito-users-table-dynamodb-table')

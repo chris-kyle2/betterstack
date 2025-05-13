@@ -1,38 +1,48 @@
+# Terraform
 .terraform/
 *.tfstate
 *.tfstate.backup
 .terraform.lock.hcl
 terraform.tfvars
 
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+frontend/coverage/
+frontend/.vite/
+frontend/.eslintcache
 
+# Python Backend
+api-backend/**/__pycache__/
+api-backend/**/*.pyc
+api-backend/**/*.pyo
+api-backend/**/*.pyd
+api-backend/.env
+api-backend/.venv/
+api-backend/venv/
+api-backend/*.egg-info/
+api-backend/.pytest_cache/
+api-backend/coverage/
+api-backend/.coverage
+api-backend/htmlcov/
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual Environment
-venv/
-.venv/
-ENV/
+# Lambda
+lambda-code/__pycache__/
+lambda-code/*.py[cod]
+lambda-code/*$py.class
+lambda-code/.env
+lambda-code/.venv/
+lambda-code/venv/
+lambda-code/*.egg-info/
+lambda-code/.pytest_cache/
+lambda-code/coverage/
+lambda-code/.coverage
+lambda-code/htmlcov/
+lambda-code/lambda-deployment.zip
 
 # IDE
 .idea/
@@ -54,14 +64,25 @@ ENV/
 # Logs
 *.log
 logs/
+api-backend/logs/
+frontend/logs/
 
-# Deployment
+# Build and deployment
 deployment/
-lambda-deployment.zip
 *.zip
+dist/
+build/
 
-# Local development
+# Testing
 .pytest_cache/
 .coverage
 htmlcov/
+coverage/
 
+# System
+.DS_Store
+Thumbs.db
+
+# Test and Temporary Files
+results.txt
+table.txt

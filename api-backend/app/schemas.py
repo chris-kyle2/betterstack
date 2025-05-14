@@ -47,7 +47,7 @@ class LogResponse(BaseModel):
     status_code: Optional[int] 
     response_time: Optional[float] 
     dns_latency: Optional[float] 
-    connect_latency: Optional[float] 
+    connection_latency: Optional[float] 
     total_latency: Optional[float] 
     is_up: bool
     certificate_valid: bool

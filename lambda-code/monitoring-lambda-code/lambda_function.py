@@ -181,7 +181,9 @@ def log_monitoring_result(endpoint, check_result):
             'certificate_expiry_date': check_result.get('certificate_expiry_date'),
             'certificate_issuer': check_result.get('certificate_issuer'),
             'tls_version': check_result.get('tls_version'),
-            'secure_protocol': check_result.get('secure_protocol')
+            'secure_protocol': check_result.get('secure_protocol'),
+            'error_message': check_result.get('error',''),
+            'is_secure': check_result.get('secure_protocol',False)
         }
         
         # Remove None values to avoid DynamoDB errors

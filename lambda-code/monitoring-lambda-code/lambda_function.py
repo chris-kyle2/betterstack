@@ -164,7 +164,7 @@ def log_monitoring_result(endpoint, check_result):
     """Log the monitoring result to DynamoDB"""
     try:
         log_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}-{endpoint['endpoint_id']}"
-        
+        current_region = os.environ.get('AWS_REGION')
         # Convert float values to Decimal
         log_item = {
             'log_id': log_id,
@@ -183,7 +183,8 @@ def log_monitoring_result(endpoint, check_result):
             'tls_version': check_result.get('tls_version'),
             'secure_protocol': check_result.get('secure_protocol',False),
             'error_message': check_result.get('error',''),
-            'is_secure': check_result.get('secure_protocol',False)
+            'is_secure': check_result.get('secure_protocol',False),
+            'region': current_region
         }
         
         # Remove None values to avoid DynamoDB errors

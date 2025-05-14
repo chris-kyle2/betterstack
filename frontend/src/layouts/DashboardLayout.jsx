@@ -10,10 +10,10 @@ const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+   
     { name: 'Endpoints', href: '/endpoints', icon: Globe },
     { name: 'Logs', href: '/logs', icon: Database },
-    { name: 'Statistics', href: '/statistics', icon: BarChart3 },
+   
   ];
 
   // Extract current page title

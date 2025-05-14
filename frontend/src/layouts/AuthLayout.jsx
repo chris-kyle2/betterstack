@@ -8,7 +8,7 @@ const AuthLayout = () => {
 
   // Redirect if already authenticated
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/endpoints" replace />;
   }
 
   return (

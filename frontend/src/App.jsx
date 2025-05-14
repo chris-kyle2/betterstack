@@ -11,11 +11,10 @@ import VerifyEmail from './pages/auth/VerifyEmail';
 const Login = React.lazy(() => import('./pages/auth/Login'));
 const SignUp = React.lazy(() => import('./pages/auth/SignUp'));
 const ForgotPassword = React.lazy(() => import('./pages/auth/ForgotPassword'));
-const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'));
+
 const EndpointsList = React.lazy(() => import('./pages/endpoints/EndpointsList'));
 const EndpointDetail = React.lazy(() => import('./pages/endpoints/EndpointDetail'));
-const LogsView = React.lazy(() => import('./pages/logs/LogsView'));
-const Statistics = React.lazy(() => import('./pages/statistics/Statistics'));
+const LogsList = React.lazy(() => import('./pages/logs/LogsList'));
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 const App = () => {
@@ -37,15 +36,15 @@ const App = () => {
 
           {/* Protected Dashboard Routes */}
           <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
-            <Route path="/dashboard" element={<Dashboard />} />
+            
             <Route path="/endpoints" element={<EndpointsList />} />
             <Route path="/endpoints/:id" element={<EndpointDetail />} />
-            <Route path="/logs/:endpointId?" element={<LogsView />} />
-            <Route path="/statistics" element={<Statistics />} />
+            <Route path="/logs/:endpointId?" element={<LogsList />} />
+            
           </Route>
 
           {/* Redirect root to dashboard if authenticated, otherwise login */}
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/endpoints" replace />} />
           
           {/* 404 page */}
           <Route path="*" element={<NotFound />} />

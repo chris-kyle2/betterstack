@@ -11,7 +11,7 @@ const EndpointStatusCard = ({ endpoint }) => {
   // Fetch recent logs for this endpoint
   const { data: endpointStats, isLoading } = useQuery(
     ['endpoint-stats', endpoint.endpoint_id],
-    () => logService.getEndpointStatistics(endpoint.endpoint_id, 1),
+    () => logService.getEndpointStatistics(endpoint.endpoint_id),
     { staleTime: 60000 }
   );
 

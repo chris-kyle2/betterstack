@@ -6,6 +6,7 @@ import socket
 import ssl
 from urllib.parse import urlparse
 import time
+from decimal import Decimal
 
 # Initialize DynamoDB client
 dynamodb = boto3.resource('dynamodb')
@@ -154,16 +155,18 @@ def log_monitoring_result(endpoint, check_result):
     """Log the monitoring result to DynamoDB"""
     try:
         log_id = f"{datetime.now().strftime('%Y%m%d%H%M%S')}-{endpoint['endpoint_id']}"
+        
+        # Convert float values to Decimal
         log_item = {
             'log_id': log_id,
             'endpoint_id': endpoint['endpoint_id'],
             'user_id': endpoint['user_id'],
             'timestamp': datetime.now().isoformat(),
             'status_code': check_result.get('status_code'),
-            'response_time': check_result.get('response_time'),
-            'dns_latency': check_result.get('dns_latency'),
-            'connection_latency': check_result.get('connection_latency'),
-            'total_latency': check_result.get('total_latency'),
+            'response_time': Decimal(str(check_result.get('response_time'))) if check_result.get('response_time') is not None else None,
+            'dns_latency': Decimal(str(check_result.get('dns_latency'))) if check_result.get('dns_latency') is not None else None,
+            'connection_latency': Decimal(str(check_result.get('connection_latency'))) if check_result.get('connection_latency') is not None else None,
+            'total_latency': Decimal(str(check_result.get('total_latency'))) if check_result.get('total_latency') is not None else None,
             'is_up': check_result.get('is_up'),
             'certificate_valid': check_result.get('certificate_valid'),
             'certificate_expiry_date': check_result.get('certificate_expiry_date'),
@@ -171,8 +174,12 @@ def log_monitoring_result(endpoint, check_result):
             'tls_version': check_result.get('tls_version'),
             'secure_protocol': check_result.get('secure_protocol')
         }
+        
+        # Remove None values to avoid DynamoDB errors
+        log_item = {k: v for k, v in log_item.items() if v is not None}
+        
         logs_table.put_item(Item=log_item)
-        print(f"Successfully logged result for {endpoint['url']}")  # Added logging
+        print(f"Successfully logged result for {endpoint['url']}")
     except Exception as e:
         print(f"Error logging result: {str(e)}")
 

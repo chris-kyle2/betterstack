@@ -12,6 +12,7 @@ from decimal import Decimal
 dynamodb = boto3.resource('dynamodb')
 # endpoints_table = dynamodb.Table(os.environ['ENDPOINTS_TABLE_NAME'])  # Commented out for testing
 logs_table = dynamodb.Table(os.environ['LOGS_TABLE_NAME'])
+print(os.environ['LOGS_TABLE_NAME'])
 
 # Hardcoded test endpoints
 TEST_ENDPOINTS = [

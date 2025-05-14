@@ -11,8 +11,16 @@ from decimal import Decimal
 # Initialize DynamoDB client
 dynamodb = boto3.resource('dynamodb')
 # endpoints_table = dynamodb.Table(os.environ['ENDPOINTS_TABLE_NAME'])  # Commented out for testing
-logs_table = dynamodb.Table(os.environ['LOGS_TABLE_NAME'])
-print(os.environ['LOGS_TABLE_NAME'])
+logs_table_name = os.environ.get('LOGS_TABLE_NAME')
+print(logs_table_name)
+
+if not logs_table_name:
+    raise ValueError("LOGS_TABLE_NAME environment variable is not set")
+try:
+    logs_table = dynamodb.Table(logs_table_name)
+except Exception as e:
+    print(f"Error initializing DynamoDB table: {str(e)}")
+    raise
 
 # Hardcoded test endpoints
 TEST_ENDPOINTS = [
@@ -178,7 +186,8 @@ def log_monitoring_result(endpoint, check_result):
         
         # Remove None values to avoid DynamoDB errors
         log_item = {k: v for k, v in log_item.items() if v is not None}
-        
+        print(f"Attempting to write logs to {logs_table_name}")
+        print(log_item)
         logs_table.put_item(Item=log_item)
         print(f"Successfully logged result for {endpoint['url']}")
     except Exception as e:

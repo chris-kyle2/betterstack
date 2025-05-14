@@ -177,11 +177,11 @@ def log_monitoring_result(endpoint, check_result):
             'connection_latency': Decimal(str(check_result.get('connection_latency'))) if check_result.get('connection_latency') is not None else None,
             'total_latency': Decimal(str(check_result.get('total_latency'))) if check_result.get('total_latency') is not None else None,
             'is_up': check_result.get('is_up'),
-            'certificate_valid': check_result.get('certificate_valid'),
+            'certificate_valid': check_result.get('certificate_valid',False),
             'certificate_expiry_date': check_result.get('certificate_expiry_date'),
             'certificate_issuer': check_result.get('certificate_issuer'),
             'tls_version': check_result.get('tls_version'),
-            'secure_protocol': check_result.get('secure_protocol'),
+            'secure_protocol': check_result.get('secure_protocol',False),
             'error_message': check_result.get('error',''),
             'is_secure': check_result.get('secure_protocol',False)
         }

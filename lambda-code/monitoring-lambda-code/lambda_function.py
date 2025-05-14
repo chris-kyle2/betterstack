@@ -9,7 +9,7 @@ import time
 from decimal import Decimal
 
 # Initialize DynamoDB client
-dynamodb = boto3.resource('dynamodb')
+dynamodb = boto3.resource('dynamodb',region_name='us-east-1')
 # endpoints_table = dynamodb.Table(os.environ['ENDPOINTS_TABLE_NAME'])  # Commented out for testing
 logs_table_name = os.environ.get('LOGS_TABLE_NAME')
 print(logs_table_name)

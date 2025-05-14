@@ -3,27 +3,18 @@ variable "region" {
   default = "ap-southeast-1"
 }
 
-variable "table_name" {
+variable "endpoints_table_name" {
+  description = "The name of the DynamoDB table"
+  type        = string
+}
+variable "logs_table_name" {
   description = "The name of the DynamoDB table"
   type        = string
 }
 variable "environment" {
-  description = "The environment for the DynamoDB table"
+  description = "The environment for the Lambda function"
   type        = string
 }
-variable "billing_mode" {
-  description = "The billing mode for the DynamoDB table"
-  type        = string
-  default     = "PAY_PER_REQUEST"
-}
-variable "dynamodb_tags" {
-  description = "Resource tags"
-  type        = map(string)
-}
-
-
-
-
 
 variable "lambda_handler" {
   description = "The handler for the Lambda function"

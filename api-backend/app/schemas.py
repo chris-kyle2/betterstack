@@ -57,6 +57,7 @@ class LogResponse(BaseModel):
     certificate_issuer: Optional[str] 
     tls_version: Optional[str] 
     secure_protocol: bool
+    region: Optional[str] = None
 
     class Config:
         orm_mode = True

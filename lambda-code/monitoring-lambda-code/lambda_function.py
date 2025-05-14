@@ -3,14 +3,33 @@ import requests
 import os
 from datetime import datetime
 import socket
-import OpenSSL
+import ssl
 from urllib.parse import urlparse
 import time
 
 # Initialize DynamoDB client
 dynamodb = boto3.resource('dynamodb')
-endpoints_table = dynamodb.Table(os.environ['ENDPOINTS_TABLE_NAME'])
+# endpoints_table = dynamodb.Table(os.environ['ENDPOINTS_TABLE_NAME'])  # Commented out for testing
 logs_table = dynamodb.Table(os.environ['LOGS_TABLE_NAME'])
+
+# Hardcoded test endpoints
+TEST_ENDPOINTS = [
+    {
+        'endpoint_id': '7c6005ce-268c-4ae2-9744-ed77af1e9bd5',
+        'user_id': 'c4184438-e021-703a-97e9-b9eff58cdff8',
+        'url': 'https://www.google.com'
+    },
+    {
+        'endpoint_id': '43afccc4-1eba-42b8-98e8-a8e113cbc0a5',
+        'user_id': 'c4184438-e021-703a-97e9-b9eff58cdff8',
+        'url': 'https://www.github.com'
+    },
+    {
+        'endpoint_id': 'a9d69e39-611d-4cd6-b574-7163c6a62d00',
+        'user_id': 'c4184438-e021-703a-97e9-b9eff58cdff8',
+        'url': 'https://www.amazon.com'
+    }
+]
 
 def measure_latency(url):
     """Measure DNS resolution, connection, and total latency"""
@@ -45,28 +64,32 @@ def measure_latency(url):
         }
 
 def check_ssl_certificate(url):
-    """Check SSL certificate validity and details"""
+    """Check SSL certificate validity and details using built-in ssl module"""
     try:
         parsed_url = urlparse(url)
         hostname = parsed_url.netloc
         port = 443
         
-        context = OpenSSL.SSL.Context(OpenSSL.SSL.TLS_CLIENT_METHOD)
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(5)
-        sock.connect((hostname, port))
-        ssl_sock = OpenSSL.SSL.Connection(context, sock)
-        ssl_sock.set_connect_state()
-        ssl_sock.do_handshake()
+        # Create SSL context with default settings
+        context = ssl.create_default_context()
         
-        cert = ssl_sock.get_peer_certificate()
-        return {
-            'certificate_valid': True,
-            'certificate_expiry_date': cert.get_notAfter().decode('utf-8'),
-            'certificate_issuer': cert.get_issuer().CN,
-            'tls_version': ssl_sock.get_protocol_version_name(),
-            'secure_protocol': True
-        }
+        # Create connection and wrap with SSL
+        with socket.create_connection((hostname, port), timeout=5) as sock:
+            with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+                cert = ssock.getpeercert()
+                
+                # Convert certificate dates to datetime
+                not_before = datetime.strptime(cert['notBefore'], '%b %d %H:%M:%S %Y %Z')
+                not_after = datetime.strptime(cert['notAfter'], '%b %d %H:%M:%S %Y %Z')
+                
+                return {
+                    'certificate_valid': True,
+                    'certificate_expiry_date': not_after.isoformat(),
+                    'certificate_issuer': dict(x[0] for x in cert['issuer']).get('CN', ''),
+                    'tls_version': ssock.version(),
+                    'secure_protocol': True,
+                    'cipher': ssock.cipher()[0]  # Get cipher name
+                }
     except Exception as e:
         return {
             'certificate_valid': False,
@@ -76,11 +99,6 @@ def check_ssl_certificate(url):
             'secure_protocol': False,
             'error': str(e)
         }
-    finally:
-        if 'ssl_sock' in locals():
-            ssl_sock.shutdown()
-        if 'sock' in locals():
-            sock.close()
 
 def check_endpoint(endpoint):
     """Check if an endpoint is responding and get all metrics"""
@@ -154,23 +172,20 @@ def log_monitoring_result(endpoint, check_result):
             'secure_protocol': check_result.get('secure_protocol')
         }
         logs_table.put_item(Item=log_item)
+        print(f"Successfully logged result for {endpoint['url']}")  # Added logging
     except Exception as e:
         print(f"Error logging result: {str(e)}")
 
 def get_endpoints():
-    """Fetch all endpoints from DynamoDB table"""
-    try:
-        response = endpoints_table.scan()
-        return response.get('Items', [])
-    except Exception as e:
-        print(f"Error fetching endpoints: {str(e)}")
-        return []
+    """Return hardcoded test endpoints instead of fetching from DynamoDB"""
+    return TEST_ENDPOINTS
 
 def lambda_handler(event, context):
     """Main Lambda handler function"""
     try:
         endpoints = get_endpoints()
         for endpoint in endpoints:
+            print(f"Checking endpoint: {endpoint['url']}")  # Added logging
             result = check_endpoint(endpoint)
             log_monitoring_result(endpoint, result)
         return {

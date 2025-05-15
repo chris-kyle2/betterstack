@@ -29,13 +29,16 @@ module "fastapi_lambda" {
   function_name_prefix = var.function_name_prefix
   lambda_handler       = var.lambda_handler
   lambda_runtime       = var.lambda_runtime
-  user_table_name      = module.dynamodb.table_name
-  endpoint_table_name  = module.dynamodb.table_name
+  user_table_name      = var.user_table_name
+  endpoint_table_name  = var.endpoint_table_name
+  dynamodb_table_name = var.logs_table_name
   cognito_region       = var.cognito_region
   cognito_user_pool_id = var.cognito_user_pool_id
   cognito_client_id    = var.cognito_client_id
   depends_on = [
-    module.dynamodb
+    module.dynamodb,
+    module.endpoints_dynamodb,
+    module.logs_dynamodb
   ]
 }
 

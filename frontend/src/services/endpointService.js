@@ -1,16 +1,26 @@
 import api from './api';
 
-const ENDPOINTS_BASE_URL = '/endpoints';
+const ENDPOINTS_BASE_URL = 'endpoints';
 
 // Endpoints service
 export const endpointService = {
   // Get all endpoints
   getEndpoints: async () => {
     try {
-      const response = await api.get(ENDPOINTS_BASE_URL);
+      console.log('Attempting to fetch endpoints...');
+      const response = await api.get(ENDPOINTS_BASE_URL, {
+        headers: {
+          'Accept': 'application/json',
+        }
+      });
+      console.log('Endpoints fetched successfully:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error in getEndpoints:', error);
+      if (error.response) {
+        console.error('Error response:', error.response.data);
+        console.error('Error status:', error.response.status);
+      }
       throw error;
     }
   },

@@ -3,7 +3,8 @@ import { Auth } from 'aws-amplify';
 
 // Set base URL from environment variable
 //@ts-ignore
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+console.log('Using API URL:', API_BASE_URL); // Debug log
 
 // Create axios instance
 const api = axios.create({
@@ -11,48 +12,36 @@ const api = axios.create({
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
-  },
+    'Accept': 'application/json',
+  }
 });
 
 // Request interceptor for adding auth token
 api.interceptors.request.use(async (config) => {
   try {
+    console.log('Making request to:', `${config.baseURL}${config.url}`);
     const session = await Auth.currentSession();
     const token = session.getIdToken().getJwtToken();
     config.headers.Authorization = `Bearer ${token}`;
     return config;
   } catch (error) {
-    // If there's no token, proceed with the request without it
+    console.error('Auth error:', error);
     return config;
   }
 });
 
 // Response interceptor for handling errors
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log('Response received:', response);
+    return response;
+  },
   async (error) => {
-    const originalRequest = error.config;
-
-    // Handle 401 errors (unauthorized)
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        // Refresh the session
-        await Auth.currentSession();
-        const session = await Auth.currentSession();
-        const token = session.getIdToken().getJwtToken();
-        
-        // Retry the original request with the new token
-        originalRequest.headers.Authorization = `Bearer ${token}`;
-        return api(originalRequest);
-      } catch (refreshError) {
-        // If refreshing fails, redirect to login
-        window.location.href = '/login';
-        return Promise.reject(refreshError);
-      }
+    console.error('API Error:', error);
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
     }
-
     return Promise.reject(error);
   }
 );

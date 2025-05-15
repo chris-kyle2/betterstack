@@ -54,6 +54,11 @@ variable "cognito_client_id" {
   type        = string
 }
 
+variable "dynamodb_table_name" {
+  description = "The name of the DynamoDB table for logs."
+  type        = string
+}
+
 
 
 

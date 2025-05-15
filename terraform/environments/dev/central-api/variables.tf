@@ -122,6 +122,25 @@ variable "function_name_prefix" {
   default     = "central-api"
 }
 
+variable "user_table_name" {
+  description = "The name of the DynamoDB table for users."
+  type        = string
+} 
+
+variable "endpoint_table_name" {
+  description = "The name of the DynamoDB table for endpoints."
+  type        = string
+}
+
+variable "logs_table_name" {
+  description = "The name of the DynamoDB table for logs."
+  type        = string
+}
+
+
+
+
+
 
 
 ########  Logs DynamoDB Table Configuration Variables #########

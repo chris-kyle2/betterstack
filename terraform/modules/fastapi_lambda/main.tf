@@ -43,6 +43,7 @@ resource "aws_lambda_function" "fastapi_lambda" {
       COGNITO_REGION = var.cognito_region
       COGNITO_USER_POOL_ID = var.cognito_user_pool_id
       COGNITO_CLIENT_ID = var.cognito_client_id
+      DYNAMODB_TABLE = var.dynamodb_table_name
 
     }
   }

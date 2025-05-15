@@ -13,26 +13,51 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["betterstack.vercel.app", "http://localhost:5173"],
+    allow_origins=["https://betterstack.vercel.app", "http://localhost:5173"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"]
+    expose_headers=["*"],
+    max_age=3600
 )
 
-# Add error handling middleware
+# Add CORS and error handling middleware
 @app.middleware("http")
-async def log_requests(request: Request, call_next):
+async def add_cors_and_log_requests(request: Request, call_next):
+    # Handle preflight requests
+    if request.method == "OPTIONS":
+        return JSONResponse(
+            content={},
+            headers={
+                "Access-Control-Allow-Origin": "https://betterstack.vercel.app",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Max-Age": "3600",
+            },
+        )
+
+    # Log the request
     logger.info(f"Request: {request.method} {request.url}")
+    
     try:
         response = await call_next(request)
         logger.info(f"Response status: {response.status_code}")
+        
+        # Add CORS headers to the response
+        response.headers["Access-Control-Allow-Origin"] = "https://betterstack.vercel.app"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        
         return response
     except Exception as e:
         logger.error(f"Error processing request: {str(e)}")
         return JSONResponse(
             status_code=500,
-            content={"detail": f"Internal server error: {str(e)}"}
+            content={"detail": f"Internal server error: {str(e)}"},
+            headers={
+                "Access-Control-Allow-Origin": "https://betterstack.vercel.app",
+                "Access-Control-Allow-Credentials": "true",
+            }
         )
 
 @app.get("/")

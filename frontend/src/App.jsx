@@ -1,21 +1,21 @@
 import React, { Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import AuthLayout from './layouts/AuthLayout';
-import DashboardLayout from './layouts/DashboardLayout';
-import LoadingSpinner from './components/common/LoadingSpinner';
-import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/auth/ProtectedRoute';
-import VerifyEmail from './pages/auth/VerifyEmail';
+import AuthLayout from './layouts/AuthLayout.jsx';
+import DashboardLayout from './layouts/DashboardLayout.jsx';
+import LoadingSpinner from './components/common/LoadingSpinner.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
+import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
+import VerifyEmail from './pages/auth/VerifyEmail.jsx';
 
 // Lazy load pages to improve initial load performance
-const Login = React.lazy(() => import('./pages/auth/Login'));
-const SignUp = React.lazy(() => import('./pages/auth/SignUp'));
-const ForgotPassword = React.lazy(() => import('./pages/auth/ForgotPassword'));
+const Login = React.lazy(() => import('./pages/auth/Login.jsx'));
+const SignUp = React.lazy(() => import('./pages/auth/SignUp.jsx'));
+const ForgotPassword = React.lazy(() => import('./pages/auth/ForgotPassword.jsx'));
 
-const EndpointsList = React.lazy(() => import('./pages/endpoints/EndpointsList'));
-const EndpointDetail = React.lazy(() => import('./pages/endpoints/EndpointDetail'));
+const EndpointsList = React.lazy(() => import('./pages/endpoints/EndpointsList.jsx'));
+const EndpointDetail = React.lazy(() => import('./pages/endpoints/EndpointDetail.jsx'));
 const LogsList = React.lazy(() => import('./pages/logs/LogsList.jsx'));
-const NotFound = React.lazy(() => import('./pages/NotFound'));
+const NotFound = React.lazy(() => import('./pages/NotFound.jsx'));
 
 const App = () => {
   return (

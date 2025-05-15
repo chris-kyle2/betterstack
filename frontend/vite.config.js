@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,13 +12,16 @@ export default defineConfig({
     global: 'window',
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html')
+      }
+    }
   }
 });
-const Login = React.lazy(() => import('./pages/auth/Login.jsx'));
-const SignUp = React.lazy(() => import('./pages/auth/SignUp.jsx'));
-const ForgotPassword = React.lazy(() => import('./pages/auth/ForgotPassword.jsx'));
-const EndpointsList = React.lazy(() => import('./pages/endpoints/EndpointsList.jsx'));
-const EndpointDetail = React.lazy(() => import('./pages/endpoints/EndpointDetail.jsx'));
-const LogsList = React.lazy(() => import('./pages/logs/LogsList.jsx'));
-const NotFound = React.lazy(() => import('./pages/NotFound.jsx'));

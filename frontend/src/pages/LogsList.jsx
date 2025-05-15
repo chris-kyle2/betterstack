@@ -4,12 +4,12 @@ import { useQuery } from 'react-query';
 import { format } from 'date-fns';
 import { Download, ArrowLeft, Search, Calendar } from 'lucide-react';
 import { toast } from 'sonner';
-import logService from '../../services/logService';
-import endpointService from '../../services/endpointService';
-import Button from '../../components/common/Button';
-import Card from '../../components/common/Card';
-import LoadingSpinner from '../../components/common/LoadingSpinner';
-import StatusBadge from '../../components/common/StatusBadge';
+import logService from '../services/logService';
+import endpointService from '../services/endpointService';
+import Button from '../components/common/Button';
+import Card from '../components/common/Card';
+import LoadingSpinner from '../components/common/LoadingSpinner';
+import StatusBadge from '../components/common/StatusBadge';
 
 
 const LogsList = () => {

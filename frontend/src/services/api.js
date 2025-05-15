@@ -2,11 +2,13 @@ import axios from 'axios';
 import { Auth } from 'aws-amplify';
 
 // Set base URL from environment variable
+//@ts-ignore
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 // Create axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -17,10 +19,7 @@ api.interceptors.request.use(async (config) => {
   try {
     const session = await Auth.currentSession();
     const token = session.getIdToken().getJwtToken();
-    config.headers = {
-      ...config.headers,
-      Authorization: `Bearer ${token}`,
-    };
+    config.headers.Authorization = `Bearer ${token}`;
     return config;
   } catch (error) {
     // If there's no token, proceed with the request without it

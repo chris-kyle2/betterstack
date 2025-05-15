@@ -31,33 +31,33 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen w-screen bg-dark-800 overflow-hidden">
-      <div className="flex h-full w-full">
+    <div className="h-screen w-screen bg-dark-800 overflow-auto">
+      <div className="flex flex-col lg:flex-row h-full w-full">
         {/* Left Column - Description */}
-        <div className="w-1/2 bg-dark-600">
-          <div className="h-full p-12 flex flex-col justify-center">
+        <div className="w-full lg:w-1/2 bg-dark-600">
+          <div className="h-full p-6 sm:p-8 md:p-12 flex flex-col justify-center">
             <div className="max-w-md mx-auto">
-              <div className="flex items-center gap-2 text-primary-500 mb-8">
-                <Activity size={40} />
-                <h1 className="text-4xl font-bold">PulseMonitor</h1>
+              <div className="flex items-center gap-2 text-primary-500 mb-6 sm:mb-8">
+                <Activity size={32} className="sm:size-40" />
+                <h1 className="text-2xl sm:text-4xl font-bold">PulseMonitor</h1>
               </div>
-              <h2 className="text-3xl font-semibold text-white mb-6">Decentralized Multi-Region Monitoring</h2>
-              <p className="text-gray-300 text-lg mb-8">
+              <h2 className="text-xl sm:text-3xl font-semibold text-white mb-4 sm:mb-6">Decentralized Multi-Region Monitoring</h2>
+              <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-8">
                 PulseMonitor leverages AWS Lambda functions deployed across multiple regions to provide comprehensive endpoint monitoring. This distributed architecture ensures reliable and resilient tracking of your web services and APIs, eliminating single points of failure.
               </p>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <Globe className="w-8 h-8 text-primary-500 mt-1 flex-shrink-0" />
+              <div className="space-y-4 sm:space-y-6">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <Globe className="w-6 h-6 sm:w-8 sm:h-8 text-primary-500 mt-1 flex-shrink-0" />
                   <div>
-                    <h3 className="text-xl text-white font-medium mb-2">Multi-Region Monitoring</h3>
-                    <p className="text-gray-400">AWS Lambda functions across different regions work together to monitor your endpoints, ensuring global coverage and high availability</p>
+                    <h3 className="text-lg sm:text-xl text-white font-medium mb-1 sm:mb-2">Multi-Region Monitoring</h3>
+                    <p className="text-gray-400 text-sm sm:text-base">AWS Lambda functions across different regions work together to monitor your endpoints, ensuring global coverage and high availability</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <BarChart3 className="w-8 h-8 text-primary-500 mt-1 flex-shrink-0" />
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-primary-500 mt-1 flex-shrink-0" />
                   <div>
-                    <h3 className="text-xl text-white font-medium mb-2">Serverless Analytics</h3>
-                    <p className="text-gray-400">Get real-time insights through distributed Lambda functions, providing cost-effective and scalable monitoring</p>
+                    <h3 className="text-lg sm:text-xl text-white font-medium mb-1 sm:mb-2">Serverless Analytics</h3>
+                    <p className="text-gray-400 text-sm sm:text-base">Get real-time insights through distributed Lambda functions, providing cost-effective and scalable monitoring</p>
                   </div>
                 </div>
               </div>
@@ -66,13 +66,13 @@ const Login = () => {
         </div>
 
         {/* Right Column - Login Form */}
-        <div className="w-1/2 flex items-center justify-center bg-dark-700">
-          <div className="w-full max-w-md p-8">
+        <div className="w-full lg:w-1/2 flex items-center justify-center bg-dark-700">
+          <div className="w-full max-w-md p-6 sm:p-8">
             <FormProvider {...methods}>
               <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold text-white">Sign in to your account</h2>
-                  <p className="mt-3 text-gray-400">
+                <div className="text-center mb-6 sm:mb-8">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white">Sign in to your account</h2>
+                  <p className="mt-2 sm:mt-3 text-gray-400 text-sm sm:text-base">
                     Monitor your endpoints with ease
                   </p>
                 </div>
@@ -95,7 +95,7 @@ const Login = () => {
                   error={methods.formState.errors.password?.message}
                 />
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0">
                   <div className="flex items-center">
                     <input
                       id="remember-me"

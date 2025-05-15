@@ -14,7 +14,7 @@ const ForgotPassword = React.lazy(() => import('./pages/auth/ForgotPassword.jsx'
 
 const EndpointsList = React.lazy(() => import('./pages/endpoints/EndpointsList.jsx'));
 const EndpointDetail = React.lazy(() => import('./pages/endpoints/EndpointDetail.jsx'));
-const LogsList = React.lazy(() => import('./pages/LogsList.jsx'));
+const LogsList = React.lazy(() => import('@/pages/LogsList.jsx'));
 const NotFound = React.lazy(() => import('./pages/NotFound.jsx'));
 
 const App = () => {

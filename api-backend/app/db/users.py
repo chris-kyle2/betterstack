@@ -7,7 +7,7 @@ import os
 
 
 
-TABLE_NAME = os.getenv('DYNAMODB_TABLE', 'dev-us-east-1-cognito-users-table-dynamodb-table')
+TABLE_NAME = os.getenv('USER_TABLE_NAME', 'dev-us-east-1-cognito-users-table-dynamodb-table')
 def create_user(user: UserCreate) -> UserOut:
     try:
             

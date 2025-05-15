@@ -7,7 +7,7 @@ import os
 import uuid
 
 dynamodb_client = boto3.resource('dynamodb')
-TABLE_NAME = os.getenv('DYNAMODB_TABLE', 'dev-us-east-1-central-api-endpoints-table-endpoints-dynamodb-table')
+TABLE_NAME = os.getenv('ENDPOINT_TABLE_NAME', 'dev-us-east-1-central-api-endpoints-table-endpoints-dynamodb-table')
 endpoints_table = dynamodb_client.Table(TABLE_NAME)
 
 def create_endpoint(endpoint: EndPointIn,user_id: str)->EndPointOut:

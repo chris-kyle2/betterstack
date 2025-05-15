@@ -10,4 +10,7 @@ export default defineConfig({
   define: {
     global: 'window',
   },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json']
+  }
 });

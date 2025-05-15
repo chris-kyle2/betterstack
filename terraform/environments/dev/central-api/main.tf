@@ -31,6 +31,9 @@ module "fastapi_lambda" {
   lambda_runtime       = var.lambda_runtime
   user_table_name      = module.dynamodb.table_name
   endpoint_table_name  = module.dynamodb.table_name
+  cognito_region       = var.cognito_region
+  cognito_user_pool_id = var.cognito_user_pool_id
+  cognito_client_id    = var.cognito_client_id
   depends_on = [
     module.dynamodb
   ]

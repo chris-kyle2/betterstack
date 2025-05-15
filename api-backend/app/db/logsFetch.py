@@ -11,7 +11,7 @@ from app.schemas import  LogListResponse, LogResponse
 dynamodb_client = boto3.resource('dynamodb')
 TABLE_NAME = os.getenv('DYNAMODB_TABLE', 'dev-us-east-1-central-api-logs-dynamodb-table')
 
-def get_logs_by_endpoint(endpoint_id: str, user_id: str, limit: Optional[int] = 10, next_token: Optional[str] = None) -> LogListResponse:
+def get_logs_by_endpoint(endpoint_id: str, user_id: str, limit: Optional[int] = 10, next_token: Optional[str] = None, start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> LogListResponse:
     try: 
         print(f"[DEBUG] Starting get_logs_by_endpoint for endpoint_id: {endpoint_id}, user_id: {user_id}")
         logs_table = dynamodb_client.Table(TABLE_NAME)
@@ -28,6 +28,15 @@ def get_logs_by_endpoint(endpoint_id: str, user_id: str, limit: Optional[int] = 
             'ScanIndexForward': False
         }
         print(f"[DEBUG] Query parameters: {json.dumps(query_params, default=str)}")
+        if start_date and end_date:
+            query_params['FilterExpression'] += ' AND #ts BETWEEN :start_date AND :end_date'
+            query_params['ExpressionAttributeValues'].update({
+                ':start_date': start_date,
+                ':end_date': end_date
+            })
+            query_params['ExpressionAttributeNames'] = {
+                '#ts': 'timestamp'
+            }
         
         if next_token:
             query_params['ExclusiveStartKey'] = json.loads(next_token)

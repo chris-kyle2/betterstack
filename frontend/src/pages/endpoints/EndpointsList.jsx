@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';

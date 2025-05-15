@@ -12,7 +12,7 @@ const DashboardLayout = () => {
   const navigation = [
    
     { name: 'Endpoints', href: '/endpoints', icon: Globe },
-    { name: 'Logs', href: '/logs', icon: Database },
+   
    
   ];
 
@@ -116,11 +116,6 @@ const DashboardLayout = () => {
               <h1 className="ml-4 lg:ml-0 text-lg font-semibold text-white">
                 {currentPage?.name || 'Dashboard'}
               </h1>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button className="rounded-full bg-dark-600 p-1 text-gray-400 hover:text-white">
-                <Settings size={20} />
-              </button>
             </div>
           </div>
         </header>

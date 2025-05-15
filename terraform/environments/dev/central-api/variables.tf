@@ -161,6 +161,24 @@ variable "logs_table_dynamodb_tags" {
   type        = map(string)
 }
 
+variable "cognito_region" {
+  description = "The region for the Cognito user pool."
+  type        = string
+}
+
+variable "cognito_user_pool_id" {
+  description = "The ID of the Cognito user pool."
+  type        = string
+}
+
+variable "cognito_client_id" {
+  description = "The ID of the Cognito client."
+  type        = string
+}
+
+
+
+
 
 
 

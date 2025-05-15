@@ -40,6 +40,9 @@ resource "aws_lambda_function" "fastapi_lambda" {
     variables = {
       USER_TABLE_NAME = var.user_table_name
       ENDPOINT_TABLE_NAME = var.endpoint_table_name
+      COGNITO_REGION = var.cognito_region
+      COGNITO_USER_POOL_ID = var.cognito_user_pool_id
+      COGNITO_CLIENT_ID = var.cognito_client_id
 
     }
   }
